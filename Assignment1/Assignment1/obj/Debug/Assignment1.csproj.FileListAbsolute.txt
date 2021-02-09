@@ -213,3 +213,4 @@ C:\Users\Jessica L\Documents\Minh-seneca\WEB524\Assignment1\Assignment1\obj\Debu
 C:\Users\Jessica L\Documents\Minh-seneca\WEB524\Assignment1\Assignment1\obj\Debug\Assignment1.csproj.CopyComplete
 C:\Users\Jessica L\Documents\Minh-seneca\WEB524\Assignment1\Assignment1\obj\Debug\Web App Project Template v1.dll
 C:\Users\Jessica L\Documents\Minh-seneca\WEB524\Assignment1\Assignment1\obj\Debug\Web App Project Template v1.pdb
+C:\Users\Jessica L\Documents\Minh-seneca\WEB524\Assignment1\Assignment1\obj\Debug\Assignment1.csprojAssemblyReference.cache

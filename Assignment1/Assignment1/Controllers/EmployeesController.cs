@@ -96,9 +96,15 @@ namespace Assignment1.Controllers
 
             try
             {
-                m.EmployeeEdit()
-
-                return RedirectToAction("Index");
+                var editedEmp = m.EmployeeEdit(employee);
+                if (editedEmp == null)
+                {
+                    return RedirectToAction("Edit", new {id = employee.EmployeeId});
+                }
+                else
+                {
+                    return RedirectToAction("Details", new {id = employee.EmployeeId});
+                }
             }
             catch
             {

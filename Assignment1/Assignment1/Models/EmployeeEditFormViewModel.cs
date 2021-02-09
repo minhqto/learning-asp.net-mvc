@@ -16,7 +16,7 @@ namespace Assignment1.Models
         }
 
         [Key]
-        public string EmployeeId { get; set; }
+        public int EmployeeId { get; set; }
         [Required]
         [StringLength(20)]
         public string LastName { get; set; }

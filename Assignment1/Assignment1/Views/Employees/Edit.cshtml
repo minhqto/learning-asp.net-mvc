@@ -5,13 +5,12 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit employee info - </h2>
+<h2>Edit employee info - @Html.ViewData.Model.FirstName @Html.ViewData.Model.LastName</h2>
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })

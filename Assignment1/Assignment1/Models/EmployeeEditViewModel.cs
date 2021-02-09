@@ -17,7 +17,7 @@ namespace Assignment1.Models
         }
 
         [Key]
-        public string EmployeeId { get; set; }
+        public int EmployeeId { get; set; }
 
         [StringLength(70)]
         public string Address { get; set; }
