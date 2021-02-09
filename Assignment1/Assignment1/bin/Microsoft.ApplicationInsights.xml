@@ -282,7 +282,7 @@
         <member name="M:Microsoft.ApplicationInsights.Channel.Transmission.#ctor(System.Uri,System.Collections.Generic.ICollection{Microsoft.ApplicationInsights.Channel.ITelemetry},System.TimeSpan)">
             <summary>
             Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Channel.Transmission"/> class.
-            </summary>
+            </summary>        
         </member>
         <member name="M:Microsoft.ApplicationInsights.Channel.Transmission.#ctor(System.Uri,System.Collections.Generic.IEnumerable{Microsoft.ApplicationInsights.Channel.ITelemetry},System.String,System.String,System.TimeSpan)">
             <summary>
@@ -297,6 +297,11 @@
         <member name="M:Microsoft.ApplicationInsights.Channel.Transmission.#ctor">
             <summary>
             Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Channel.Transmission"/> class. This overload is for Test purposes. 
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Channel.Transmission.TransmissionStatusEvent">
+            <summary>
+            Gets or Sets an event notification to track ingestion endpoint response.
             </summary>
         </member>
         <member name="P:Microsoft.ApplicationInsights.Channel.Transmission.EndpointAddress">
@@ -364,6 +369,22 @@
             </summary>
             <param name="address">The Address in the web request.</param>
             <returns>A web request pointing to the <c>Address</c>.</returns>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Channel.TransmissionStatusEventArgs">
+            <summary>
+            Event argument to track response from ingestion endpoint.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.TransmissionStatusEventArgs.#ctor(Microsoft.ApplicationInsights.Extensibility.Implementation.HttpWebResponseWrapper)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Channel.TransmissionStatusEventArgs"/> class.
+            </summary>
+            <param name="response">Response from ingestion endpoint.</param>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Channel.TransmissionStatusEventArgs.Response">
+            <summary>
+            Gets the response from ingestion endpoint.
+            </summary>
         </member>
         <member name="T:Microsoft.ApplicationInsights.DataContracts.AvailabilityTelemetry">
             <summary>
@@ -2468,6 +2489,22 @@
             Gets or sets the application version.
             </summary>
         </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Implementation.ConfigString.ConfigStringParser">
+            <summary>
+            Helper class to parse a configuration string.
+            A configuration string is defined as a string composed of key/value pairs.
+            (ex: "key1=value1;key2=value2;key3=value3").
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Implementation.ConfigString.ConfigStringParser.Parse(System.String)">
+            <summary>
+            Parse a given string and return a dictionary of the key/value pairs.
+            This method will do some validation and throw exceptions if the input string does not conform to the definition of a configuration string.
+            </summary>
+            <param name="configString">Input string to be parsed. This string cannot be null or empty. This string will be checked for validity.</param>
+            <returns>Returns a dictionary of Key/Value pairs. Keys are not case sensitive.</returns>
+            <remarks>This is used by both Connection Strings and Self-Diagnostics configuration.</remarks>
+        </member>
         <member name="T:Microsoft.ApplicationInsights.Extensibility.Implementation.DeviceContext">
             <summary>
             Encapsulates information about a device where an application is running.
@@ -3750,7 +3787,7 @@
         <member name="M:Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.BaseDefaultHeartbeatPropertyProvider.GetRuntimeOsType">
             <summary>
             Runtime information for the underlying OS, should include Linux information here as well.
-            Note that in NET45/46 the PlatformId is returned which have slightly different (more specific,
+            Note that in NET452/46 the PlatformId is returned which have slightly different (more specific,
             such as Win32NT/Win32S/MacOSX/Unix) values than in NETSTANDARD assemblies where you will get
             the OS platform Windows/Linux/OSX.
             </summary>
@@ -3803,9 +3840,19 @@
             Keyword for errors that trace at Error level.
             </summary>
         </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.DiagnosticsModule.DiagnosticsEventListener.ShouldSubscribe(System.Diagnostics.Tracing.EventSource)">
+            <summary>
+            This method checks if the given EventSource Name matches known EventSources that we want to subscribe to.
+            </summary>
+        </member>
         <member name="T:Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.DiagnosticsModule.DiagnosticsListener">
             <summary>
             Subscriber to ETW Event source events, which sends data to other Senders (F5 and Portal).
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.DiagnosticsModule.DiagnosticsListener.SetLogLevel(System.String)">
+            <summary>
+            Sets LogLevel. Possible values LogAlways, Critical, Error, Warning, Informational and Verbose.
             </summary>
         </member>
         <member name="M:Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.DiagnosticsModule.IDiagnosticsSender.Send(Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.TraceEvent)">
@@ -3824,16 +3871,6 @@
         <member name="T:Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.DiagnosticsModule.PortalDiagnosticsSender">
             <summary>
             This class is responsible for sending diagnostics information into portal.
-            </summary>
-        </member>
-        <member name="F:Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.DiagnosticsModule.PortalDiagnosticsSender.AiPrefix">
-            <summary>
-            Prefix of the traces in portal.
-            </summary>
-        </member>
-        <member name="F:Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.DiagnosticsModule.PortalDiagnosticsSender.AiNonUserActionable">
-            <summary>
-            For user non actionable traces use AI Internal prefix.
             </summary>
         </member>
         <member name="M:Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.DiagnosticsModule.PortalDiagnosticsSender.#ctor(Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration,Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.DiagnosticsModule.IDiagnoisticsEventThrottlingManager)">
@@ -3894,7 +3931,7 @@
         </member>
         <member name="P:Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.DiagnosticsTelemetryModule.HeartbeatInterval">
             <summary>
-            Gets or sets the delay interval between heartbeats.
+            Gets or sets the delay interval between heartbeats. Setting this value will immediately reset the heartbeat timer.
             
             <remarks>
             Note that there is a minimum interval <see cref="F:Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.HeartbeatProvider.MinimumHeartbeatInterval"/> and if an 
@@ -3934,6 +3971,9 @@
             Gets or sets instrumentation key for diagnostics. Use to redirect SDK 
             internal problems reporting to the separate instrumentation key.
             </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.DiagnosticsTelemetryModule.IsInitialized">
+            <summary>Gets a value indicating whether this module has been initialized.</summary>
         </member>
         <member name="M:Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.DiagnosticsTelemetryModule.Initialize(Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration)">
             <summary>
@@ -4114,7 +4154,7 @@
         </member>
         <member name="M:Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.FileDiagnosticsTelemetryModule.Initialize(Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration)">
             <summary>
-            Initializes the telemetry module.
+            No op.
             </summary>
             <param name="configuration">Telemetry configuration object.</param>
         </member>
@@ -4128,9 +4168,30 @@
             Disposes event listener.
             </summary>
         </member>
-        <member name="M:Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.FileDiagnosticsTelemetryModule.CheckAccessPermissions(System.IO.DirectoryInfo)">
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.FileHelper">
             <summary>
-            Throws <see cref="T:System.UnauthorizedAccessException" /> if the process lacks the required permissions to access the <paramref name="directory"/>.
+            This class contains helper methods that can be shared across file loggers.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.FileHelper.TestDirectoryPermissions(System.IO.DirectoryInfo)">
+            <summary>
+            Test that this process can read and write to a given directory.
+            </summary>
+            <param name="directory">The directory to be evaluated.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.FileHelper.GenerateFileName">
+            <summary>
+            Generate a file name in the format "ApplicationInsightsLog_20200101_120000_w3wp_12345.txt.
+            </summary>
+            <remarks>
+            File logging can be controlled by an Environment Variable and may affect multiple running applications on a single machine.
+            We include the Date, TimeStamp, Process Name, and Process ID to uniquely identify applications.
+            </remarks>
+            <returns>File name for use in logging.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.FileHelper.GetCurrentIdentityName">
+            <summary>
+            Get the current identity.
             </summary>
         </member>
         <member name="T:Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.HeartbeatPropertyPayload">
@@ -4231,6 +4292,12 @@
             </summary>
             <returns>A MetricTelemtry item that contains the currently defined payload for a heartbeat 'pulse'.</returns>
         </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.HeartbeatProvider.InitTimer">
+            <summary>
+            This method is intended to be called from the <see cref="M:Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.HeartbeatProvider.Initialize(Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration)"/> method, or whenever <see cref="P:Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.HeartbeatProvider.IsHeartbeatEnabled"/> or <see cref="P:Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.HeartbeatProvider.HeartbeatInterval"/> properties have been set.
+            This will ensure that any changes to properties will be immediately applied to the <see cref="P:Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.HeartbeatProvider.HeartbeatTimer"/>.
+            </summary>
+        </member>
         <member name="T:Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.IHeartbeatDefaultPayloadProvider">
             <summary>
             Provides default properties for the heartbeat.
@@ -4312,6 +4379,16 @@
             <summary>
             Event Source event wrapper.
             Contains description information for trace event.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.TraceEvent.AiPrefix">
+            <summary>
+            Prefix for user-actionable traces.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.TraceEvent.AiNonUserActionable">
+            <summary>
+            Prefix for non user-actionable traces. "AI Internal".
             </summary>
         </member>
         <member name="P:Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.TraceEvent.MetaData">
@@ -7766,6 +7843,7 @@
         <member name="P:Microsoft.ApplicationInsights.TelemetryClient.TelemetryConfiguration">
             <summary>
             Gets the <see cref="P:Microsoft.ApplicationInsights.TelemetryClient.TelemetryConfiguration"/> object associated with this telemetry client instance.
+            Changes made to the configuration can affect other clients.
             </summary>
         </member>
         <member name="M:Microsoft.ApplicationInsights.TelemetryClient.IsEnabled">
@@ -8503,6 +8581,20 @@
             <param name="telemetryClient">Telemetry client object.</param>
             <param name="activity">Activity to get tracing context and telemetry properties from.</param>
             <returns>Operation item object with a new telemetry item having current start time and timestamp.</returns>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Common.Extensions.DateTimeExtensions">
+            <summary>
+            Provides extension methods for <see cref="T:System.DateTime"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Common.Extensions.DateTimeExtensions.ToInvariantString(System.DateTime,System.String)">
+            <summary>
+            This is a proxy method to <see cref="M:System.DateTime.ToString(System.String,System.IFormatProvider)"/>.
+            Converts the value of the current System.DateTime object to its equivalent string representation using the specified format and CultureInfo.InvariantCulture.
+            </summary>
+            <param name="input">The date and time value to convert to string.</param>
+            <param name="format">A standard or custom date and time format string.</param>
+            <returns>A string representation of value of the current System.DateTime object as specified by format and provider.</returns>
         </member>
         <member name="T:Microsoft.ApplicationInsights.Common.Extensions.ExceptionExtensions">
             <summary>

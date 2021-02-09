@@ -129,6 +129,17 @@
             An AND-connected group of FilterInfo objects.
             </summary>
         </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.ICounterValue">
+            <summary>
+            Interface represents the counter value.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.ICounterValue.Collect">
+            <summary>
+            Returns the current value of the counter.
+            </summary>
+            <returns>Value of the counter.</returns>
+        </member>
         <member name="P:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.IPerformanceCollector.PerformanceCounters">
             <summary>
             Gets a collection of counters that are currently registered with the collector.
@@ -636,12 +647,12 @@
         </member>
         <member name="F:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.QuickPulse.QuickPulseDataAccumulator.MaxCount">
             <summary>
-            2^19 - 1.
+            MaxCount = 2^19 - 1.
             </summary>
         </member>
         <member name="F:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.QuickPulse.QuickPulseDataAccumulator.MaxDuration">
             <summary>
-            2^44 - 1.
+            MaxDuration = 2^44 - 1.
             </summary>
         </member>
         <member name="T:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.QuickPulse.QuickPulseDataAccumulatorManager">
@@ -696,6 +707,156 @@
         <member name="T:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.QuickPulse.QuickPulseServiceClient">
             <summary>
             Service client for QPS service.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.CounterFactory">
+            <summary>
+            Factory to create different counters.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.CounterFactory.GetCounter(System.String,System.String,System.String,System.String)">
+            <summary>
+            Gets a counter.
+            </summary>
+            <param name="originalString">Original string definition of the counter.</param>
+            <param name="categoryName">Category name.</param>
+            <param name="counterName">Counter name.</param>
+            <param name="instanceName">Instance name.</param>
+            <returns>The counter identified by counter name.</returns>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.NormalizedProcessCPUPerformanceCounter">
+            <summary>
+            Represents normalized value of CPU Utilization by Process counter value (divided by the processors count).
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.NormalizedProcessCPUPerformanceCounter.#ctor(System.String)">
+            <summary>
+             Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.NormalizedProcessCPUPerformanceCounter" /> class.
+            </summary>
+            <param name="instanceName">The instance name.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.NormalizedProcessCPUPerformanceCounter.Collect">
+            <summary>
+            Returns the current value of the counter as a <c ref="MetricTelemetry"/>.
+            </summary>
+            <returns>Value of the counter.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.NormalizedProcessCPUPerformanceCounter.Dispose">
+            <summary>
+            Disposes resources allocated by this type.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.NormalizedProcessCPUPerformanceCounter.Dispose(System.Boolean)">
+            <summary>
+            Dispose implementation.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCollector.PerformanceCounters">
+            <summary>
+            Gets a collection of registered performance counters.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCollector.Collect(System.Action{System.String,System.Exception})">
+            <summary>
+            Performs collection for all registered counters.
+            </summary>
+            <param name="onReadingFailure">Invoked when an individual counter fails to be read.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCollector.RefreshCounters">
+            <summary>
+            Refreshes counters.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCollector.RegisterCounter(System.String,System.String,System.String@,System.Boolean)">
+            <summary>
+            Registers a counter using the counter name and reportAs value to the total list of counters.
+            </summary>
+            <param name="perfCounterName">Name of the performance counter.</param>
+            <param name="reportAs">Report as name for the performance counter.</param>
+            <param name="error">Captures the error logged.</param>
+            <param name="blockCounterWithInstancePlaceHolder">Boolean that controls the registry of the counter based on the availability of instance place holder.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCollector.RemoveCounter(System.String,System.String)">
+            <summary>
+            Removes a counter.
+            </summary>
+            <param name="perfCounter">Name of the performance counter to remove.</param>
+            <param name="reportAs">ReportAs value of the performance counter to remove.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCollector.Dispose">
+            <summary>
+            Collects a value for a single counter.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCollector.RefreshPerformanceCounter(Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.PerformanceCounterData)">
+            <summary>
+            Rebinds performance counters to Windows resources.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCollector.LoadDependentInstances">
+            <summary>
+            Loads instances that are used in performance counter computation.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCollector.RefreshCounter(Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.PerformanceCounterData)">
+            <summary>
+            Refreshes the counter associated with a specific performance counter data.
+            </summary>
+            <param name="pcd">Target performance counter data to refresh.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCollector.RegisterCounter(System.String,System.String,Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.PerformanceCounterStructure,System.Boolean,System.String@)">
+            <summary>
+            Registers the counter to the existing list of counters.
+            </summary>
+            <param name="originalString">Counter original string.</param>
+            <param name="reportAs">Counter report as.</param>
+            <param name="pc">Performance counter.</param>
+            <param name="usesInstanceNamePlaceholder">Uses Instance Name Place holder boolean.</param>
+            <param name="error">Error message.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCollector.RegisterPerformanceCounter(System.String,System.String,System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            Register a performance counter for collection.
+            </summary>
+            <param name="originalString">Original string definition of the counter.</param>
+            <param name="reportAs">Alias to report the counter as.</param>
+            <param name="categoryName">Category name.</param>
+            <param name="counterName">Counter name.</param>
+            <param name="instanceName">Instance name.</param>
+            <param name="usesInstanceNamePlaceholder">Indicates whether the counter uses a placeholder in the instance name.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCollector.Dispose(System.Boolean)">
+            <summary>
+            Dispose implementation.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCounter">
+            <summary>
+            Interface represents the counter value.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCounter.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCounter" /> class.
+            </summary>
+            <param name="categoryName">The counter category name.</param>
+            <param name="counterName">The counter name.</param>
+            <param name="instanceName">The instance name.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCounter.Collect">
+            <summary>
+            Returns the current value of the counter as a <c ref="MetricTelemetry"/>.
+            </summary>
+            <returns>Value of the counter.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCounter.Dispose">
+            <summary>
+            Disposes resources allocated by this type.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCounter.Dispose(System.Boolean)">
+            <summary>
+            Dispose implementation.
             </summary>
         </member>
         <member name="T:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.Timer.Timer">
@@ -1118,171 +1279,13 @@
             Register a performance counter for collection.
             </summary>
         </member>
-        <member name="T:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.ICounterValue">
-            <summary>
-            Interface represents the counter value.
-            </summary>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.ICounterValue.Collect">
-            <summary>
-            Returns the current value of the counter.
-            </summary>
-            <returns>Value of the counter.</returns>
-        </member>
-        <member name="T:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.CounterFactory">
-            <summary>
-            Factory to create different counters.
-            </summary>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.CounterFactory.GetCounter(System.String,System.String,System.String,System.String)">
-            <summary>
-            Gets a counter.
-            </summary>
-            <param name="originalString">Original string definition of the counter.</param>
-            <param name="categoryName">Category name.</param>
-            <param name="counterName">Counter name.</param>
-            <param name="instanceName">Instance name.</param>
-            <returns>The counter identified by counter name.</returns>
-        </member>
-        <member name="T:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.NormalizedProcessCPUPerformanceCounter">
-            <summary>
-            Represents normalized value of CPU Utilization by Process counter value (divided by the processors count).
-            </summary>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.NormalizedProcessCPUPerformanceCounter.#ctor(System.String)">
-            <summary>
-             Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.NormalizedProcessCPUPerformanceCounter" /> class.
-            </summary>
-            <param name="instanceName">The instance name.</param>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.NormalizedProcessCPUPerformanceCounter.Collect">
-            <summary>
-            Returns the current value of the counter as a <c ref="MetricTelemetry"/>.
-            </summary>
-            <returns>Value of the counter.</returns>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.NormalizedProcessCPUPerformanceCounter.Dispose">
-            <summary>
-            Disposes resources allocated by this type.
-            </summary>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.NormalizedProcessCPUPerformanceCounter.Dispose(System.Boolean)">
-            <summary>
-            Dispose implementation.
-            </summary>
-        </member>
-        <member name="P:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCollector.PerformanceCounters">
-            <summary>
-            Gets a collection of registered performance counters.
-            </summary>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCollector.Collect(System.Action{System.String,System.Exception})">
-            <summary>
-            Performs collection for all registered counters.
-            </summary>
-            <param name="onReadingFailure">Invoked when an individual counter fails to be read.</param>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCollector.RefreshCounters">
-            <summary>
-            Refreshes counters.
-            </summary>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCollector.RegisterCounter(System.String,System.String,System.String@,System.Boolean)">
-            <summary>
-            Registers a counter using the counter name and reportAs value to the total list of counters.
-            </summary>
-            <param name="perfCounterName">Name of the performance counter.</param>
-            <param name="reportAs">Report as name for the performance counter.</param>
-            <param name="error">Captures the error logged.</param>
-            <param name="blockCounterWithInstancePlaceHolder">Boolean that controls the registry of the counter based on the availability of instance place holder.</param>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCollector.RemoveCounter(System.String,System.String)">
-            <summary>
-            Removes a counter.
-            </summary>
-            <param name="perfCounter">Name of the performance counter to remove.</param>
-            <param name="reportAs">ReportAs value of the performance counter to remove.</param>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCollector.Dispose">
-            <summary>
-            Collects a value for a single counter.
-            </summary>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCollector.RefreshPerformanceCounter(Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.PerformanceCounterData)">
-            <summary>
-            Rebinds performance counters to Windows resources.
-            </summary>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCollector.LoadDependentInstances">
-            <summary>
-            Loads instances that are used in performance counter computation.
-            </summary>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCollector.RefreshCounter(Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.PerformanceCounterData)">
-            <summary>
-            Refreshes the counter associated with a specific performance counter data.
-            </summary>
-            <param name="pcd">Target performance counter data to refresh.</param>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCollector.RegisterCounter(System.String,System.String,Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.PerformanceCounterStructure,System.Boolean,System.String@)">
-            <summary>
-            Registers the counter to the existing list of counters.
-            </summary>
-            <param name="originalString">Counter original string.</param>
-            <param name="reportAs">Counter report as.</param>
-            <param name="pc">Performance counter.</param>
-            <param name="usesInstanceNamePlaceholder">Uses Instance Name Place holder boolean.</param>
-            <param name="error">Error message.</param>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCollector.RegisterPerformanceCounter(System.String,System.String,System.String,System.String,System.String,System.Boolean)">
-            <summary>
-            Register a performance counter for collection.
-            </summary>
-            <param name="originalString">Original string definition of the counter.</param>
-            <param name="reportAs">Alias to report the counter as.</param>
-            <param name="categoryName">Category name.</param>
-            <param name="counterName">Counter name.</param>
-            <param name="instanceName">Instance name.</param>
-            <param name="usesInstanceNamePlaceholder">Indicates whether the counter uses a placeholder in the instance name.</param>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCollector.Dispose(System.Boolean)">
-            <summary>
-            Dispose implementation.
-            </summary>
-        </member>
-        <member name="T:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCounter">
-            <summary>
-            Interface represents the counter value.
-            </summary>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCounter.#ctor(System.String,System.String,System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCounter" /> class.
-            </summary>
-            <param name="categoryName">The counter category name.</param>
-            <param name="counterName">The counter name.</param>
-            <param name="instanceName">The instance name.</param>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCounter.Collect">
-            <summary>
-            Returns the current value of the counter as a <c ref="MetricTelemetry"/>.
-            </summary>
-            <returns>Value of the counter.</returns>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCounter.Dispose">
-            <summary>
-            Disposes resources allocated by this type.
-            </summary>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.StandardPerfCollector.StandardPerformanceCounter.Dispose(System.Boolean)">
-            <summary>
-            Dispose implementation.
-            </summary>
-        </member>
         <member name="T:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.QuickPulse.QuickPulseTelemetryModule">
             <summary>
             Telemetry module for collecting QuickPulse data.
             </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.QuickPulse.QuickPulseTelemetryModule.IsInitialized">
+            <summary>Gets a value indicating whether this module has been initialized.</summary>
         </member>
         <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.QuickPulse.QuickPulseTelemetryModule.#ctor">
             <summary>
@@ -1360,24 +1363,16 @@
             Extracts QuickPulse data from the telemetry stream.
             </summary>
         </member>
-        <member name="F:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.QuickPulse.QuickPulseTelemetryProcessor.globalQuotaTracker">
-            <summary>
-            An overall, cross-stream quota tracker.
-            </summary>
-        </member>
         <member name="F:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.QuickPulse.QuickPulseTelemetryProcessor.TelemetryDocumentContractVersion">
             <summary>
             1.0 - initial release.
             1.1 - added DocumentStreamId, EventTelemetryDocument, TraceTelemetryDocument.
             </summary>
         </member>
-        <member name="P:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.QuickPulse.QuickPulseTelemetryProcessor.Microsoft#ApplicationInsights#Extensibility#PerfCounterCollector#QuickPulse#IQuickPulseTelemetryProcessor#ServiceEndpoint">
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.QuickPulse.QuickPulseTelemetryProcessor.globalQuotaTracker">
             <summary>
-            Gets or sets an endpoint that is compared against telemetry to remove our requests from customer telemetry.
+            An overall, cross-stream quota tracker.
             </summary>
-            <remarks>
-            This is set from the QuickPulseTelemetryModule. 
-            </remarks>
         </member>
         <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.QuickPulse.QuickPulseTelemetryProcessor.#ctor(Microsoft.ApplicationInsights.Extensibility.ITelemetryProcessor)">
             <summary>
@@ -1395,6 +1390,14 @@
             <param name="maxGlobalTelemetryQuota">Max overall telemetry quota.</param>
             <param name="initialGlobalTelemetryQuota">Initial overall telemetry quota.</param>
             <exception cref="T:System.ArgumentNullException">Thrown if next is null.</exception>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.QuickPulse.QuickPulseTelemetryProcessor.Microsoft#ApplicationInsights#Extensibility#PerfCounterCollector#QuickPulse#IQuickPulseTelemetryProcessor#ServiceEndpoint">
+            <summary>
+            Gets or sets an endpoint that is compared against telemetry to remove our requests from customer telemetry.
+            </summary>
+            <remarks>
+            This is set from the QuickPulseTelemetryModule. 
+            </remarks>
         </member>
         <member name="P:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.QuickPulse.QuickPulseTelemetryProcessor.EvaluateDisabledTrackingProperties">
             <summary>
@@ -1458,6 +1461,9 @@
             <summary>
             Timer to schedule performance collection.
             </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.PerformanceCollectorModule.IsInitialized">
+            <summary>Gets a value indicating whether this module has been initialized.</summary>
         </member>
         <member name="M:Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.PerformanceCollectorModule.#ctor">
             <summary>
@@ -1571,16 +1577,16 @@
             </summary>
             <remarks>
             Array.Empty() was added to Net Framework in 4.6
-            This adds support for Net45.
+            This adds support for net452.
             </remarks>
         </member>
         <member name="T:Microsoft.ApplicationInsights.Common.ArrayExtensions.EmptyArray`1">
             <summary>
-            [Net45 Only] Copied from Net Framework (https://referencesource.microsoft.com/#mscorlib/system/array.cs,bc9fd1be0e4f4e70,references).
+            [net452 Only] Copied from Net Framework (https://referencesource.microsoft.com/#mscorlib/system/array.cs,bc9fd1be0e4f4e70,references).
             </summary>
             <remarks>
             Array.Empty() was added to Net Framework in 4.6
-            This adds support for Net45.
+            This adds support for net452.
             </remarks>
         </member>
         <member name="T:Microsoft.ApplicationInsights.Common.ConditionalWeakTableExtensions">

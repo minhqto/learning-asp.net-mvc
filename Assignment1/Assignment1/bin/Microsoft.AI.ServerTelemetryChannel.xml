@@ -598,6 +598,11 @@
             Gets or sets the endpoint address.  
             </summary>
         </member>
+        <member name="P:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.TelemetrySerializer.TransmissionStatusEvent">
+            <summary>
+            Gets or Sets the subscriber to an event with Transmission and HttpWebResponseWrapper.
+            </summary>
+        </member>
         <member name="P:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.TransmissionBuffer.Capacity">
             <summary>
             Gets or sets the maximum amount of memory in bytes for buffering <see cref="T:Microsoft.ApplicationInsights.Channel.Transmission"/> objects.
@@ -901,6 +906,11 @@
             Gets or sets the HTTP address where the telemetry is sent.
             </summary>
         </member>
+        <member name="P:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.ServerTelemetryChannel.TransmissionStatusEvent">
+            <summary>
+            Gets or Sets the subscriber to an event with Transmission and HttpWebResponseWrapper.
+            </summary>
+        </member>
         <member name="P:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.ServerTelemetryChannel.MaxTelemetryBufferDelay">
             <summary>
             Gets or sets the maximum telemetry batching interval. Once the interval expires, <see cref="N:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel"/> 
@@ -1191,6 +1201,20 @@
             <param name="excludedTypes">Semicolon separated list of types that should not be sampled.</param>
             <param name="includedTypes">Semicolon separated list of types that should be sampled. All types are sampled when left empty.</param> 
             <return>Same instance of <see cref="T:Microsoft.ApplicationInsights.Extensibility.Implementation.TelemetryProcessorChainBuilder"/>.</return>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Common.Extensions.DateTimeExtensions">
+            <summary>
+            Provides extension methods for <see cref="T:System.DateTime"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Common.Extensions.DateTimeExtensions.ToInvariantString(System.DateTime,System.String)">
+            <summary>
+            This is a proxy method to <see cref="M:System.DateTime.ToString(System.String,System.IFormatProvider)"/>.
+            Converts the value of the current System.DateTime object to its equivalent string representation using the specified format and CultureInfo.InvariantCulture.
+            </summary>
+            <param name="input">The date and time value to convert to string.</param>
+            <param name="format">A standard or custom date and time format string.</param>
+            <returns>A string representation of value of the current System.DateTime object as specified by format and provider.</returns>
         </member>
         <member name="T:Microsoft.ApplicationInsights.Common.Extensions.ExceptionExtensions">
             <summary>
