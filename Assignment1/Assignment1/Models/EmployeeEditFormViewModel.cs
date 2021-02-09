@@ -17,7 +17,13 @@ namespace Assignment1.Models
 
         [Key]
         public string EmployeeId { get; set; }
+        [Required]
+        [StringLength(20)]
+        public string LastName { get; set; }
 
+        [Required]
+        [StringLength(20)]
+        public string FirstName { get; set; }
         [StringLength(70)]
         public string Address { get; set; }
 

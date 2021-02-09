@@ -5,6 +5,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Assignment1.EntityModels;
+using Assignment1.Models;
 
 namespace Assignment1.Controllers
 {
@@ -34,19 +35,30 @@ namespace Assignment1.Controllers
         // GET: Employees/Create
         public ActionResult Create()
         {
-            Employee newEmployee = new Employee();
-            return View(newEmployee);
+           
+            return View(new EmployeeAddViewModel());
         }
 
         // POST: Employees/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(EmployeeAddViewModel newEmployee)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(newEmployee);
+            }
+
             try
             {
-               
-
-                return RedirectToAction("Index");
+                var addedEmployee = m.EmployeeAdd(newEmployee);
+                if (addedEmployee == null)
+                {
+                    return View(newEmployee);
+                }
+                else
+                {
+                    return RedirectToAction("Details", new {id = addedEmployee.EmployeeId});
+                }
             }
             catch
             {
@@ -55,18 +67,36 @@ namespace Assignment1.Controllers
         }
 
         // GET: Employees/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            return View();
+            var employee = m.EmployeeGetById(id.GetValueOrDefault());
+            if (employee == null)
+            {
+                return HttpNotFound();
+            }
+
+            var formObj = m.mapper.Map<EmployeeBaseViewModel, EmployeeEditFormViewModel>(employee);
+            return View(formObj);
         }
 
         // POST: Employees/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int? id, EmployeeEditViewModel employee)
         {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Edit", new {id = employee.EmployeeId});
+            }
+
+            if (id.GetValueOrDefault() != employee.EmployeeId)
+            {
+                return RedirectToAction("Index");
+            }
+
+
             try
             {
-                // TODO: Add update logic here
+                m.EmployeeEdit()
 
                 return RedirectToAction("Index");
             }

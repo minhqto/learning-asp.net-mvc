@@ -34,8 +34,7 @@ namespace Assignment1.Controllers
                 cfg.CreateMap<Employee, EmployeeBaseViewModel>();
                 cfg.CreateMap<EmployeeAddViewModel, Employee>();
                 cfg.CreateMap<Employee, EmployeeEditViewModel>();
-                cfg.CreateMap<EmployeeBaseViewModel, EmployeeEditFormViewModel>();
-
+                cfg.CreateMap<EmployeeEditFormViewModel, Employee>();
                 //when we map, we want to map in the direction that teh data flows in the app that we have
                 //for example, if we're just getting data from an entity, we just have to map from entity to the view model, but not vice versa
                 //if there is an add functionality, then we have to map from the view model where the data is coming from, to the entity 
