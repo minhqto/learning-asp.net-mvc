@@ -33,8 +33,6 @@ namespace Assignment1.Controllers
                 // cfg.CreateMap<Employee, EmployeeBase>();
                 cfg.CreateMap<Employee, EmployeeBaseViewModel>();
                 cfg.CreateMap<EmployeeAddViewModel, Employee>();
-                cfg.CreateMap<Employee, EmployeeEditViewModel>();
-                cfg.CreateMap<EmployeeEditFormViewModel, Employee>();
                 cfg.CreateMap<EmployeeBaseViewModel, EmployeeEditFormViewModel>();
                 //when we map, we want to map in the direction that teh data flows in the app that we have
                 //for example, if we're just getting data from an entity, we just have to map from entity to the view model, but not vice versa
@@ -61,8 +59,9 @@ namespace Assignment1.Controllers
         public IEnumerable<EmployeeBaseViewModel> EmployeeGetAll()
         {
             var sortedEmps = from emps in ds.Employees
-                                            select emps;
-            sortedEmps = sortedEmps.OrderBy(emp => emp.LastName).ThenBy(emp => emp.FirstName);
+                                                orderby emps.LastName, emps.FirstName
+                                             select emps;
+ 
             return mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeBaseViewModel>>(sortedEmps);
         }
 
@@ -81,7 +80,7 @@ namespace Assignment1.Controllers
 
         public EmployeeBaseViewModel EmployeeEdit(EmployeeEditViewModel editEmp)
         {
-            var result =  ds.Employees.Find(editEmp);
+            var result =  ds.Employees.Find(editEmp.EmployeeId);
             if (result == null)
             {
                 return null;

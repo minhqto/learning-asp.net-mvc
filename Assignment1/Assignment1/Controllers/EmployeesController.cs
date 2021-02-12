@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using Assignment1.EntityModels;
 using Assignment1.Models;
+using Microsoft.Ajax.Utilities;
 
 namespace Assignment1.Controllers
 {
@@ -108,7 +109,7 @@ namespace Assignment1.Controllers
             }
             catch
             {
-                return View();
+                return RedirectToAction("Edit", new { id = employee.EmployeeId });
             }
         }
 

@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Assignment1.Models
 {
-    //this is what will be sent back from the user when they submit the form aka POST request
+    // for GET
     public class EmployeeEditFormViewModel
     {
         public EmployeeEditFormViewModel()
@@ -47,18 +47,20 @@ namespace Assignment1.Models
 
         [StringLength(60)]
         public string Email { get; set; }
-        
+
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+
         [RegularExpression("[0-9]+")]
         [StringLength(9)]
-        [Display(Name="Social Insurance Number")]
+        [Display(Name = "Social Insurance Number")]
         public string SocialInsuranceNumber { get; set; }
 
-        [Range(1,5)]
+        [Range(1, 5)]
         [Display(Name = "Office Level")]
         public int OfficeLevel { get; set; }
+
 
     }
 }

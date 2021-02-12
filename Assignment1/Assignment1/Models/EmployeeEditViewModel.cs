@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Assignment1.Models
 {
-    //this is what will be sent to the user aka the GET request
+   //for POST
 
     public class EmployeeEditViewModel
     {
@@ -42,6 +42,8 @@ namespace Assignment1.Models
 
         [StringLength(60)]
         public string Email { get; set; }
+
+       
 
     }
 }
