@@ -77,5 +77,9 @@ namespace Assignment2.EntityModels
                 .WithRequired(e => e.Track)
                 .WillCascadeOnDelete(false);
         }
+
+        public System.Data.Entity.DbSet<Assignment2.Models.InvoiceBaseViewModel> InvoiceBaseViewModels { get; set; }
+
+        public System.Data.Entity.DbSet<Assignment2.Models.InvoiceWithDetailViewModel> InvoiceWithDetailViewModels { get; set; }
     }
 }

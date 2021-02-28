@@ -19,7 +19,7 @@ namespace Assignment2.Controllers
         // GET: Invoice/Details/5
         public ActionResult Details(int? id)
         {
-            var invoice = m.InvoiceGetOne(id.GetValueOrDefault());
+            var invoice = m.InvoiceGetByIdWithDetail(id.GetValueOrDefault());
             if(invoice == null || id == null)
             {
                 return HttpNotFound();

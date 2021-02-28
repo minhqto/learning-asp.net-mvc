@@ -4,12 +4,9 @@ using Assignment2.EntityModels;
 
 namespace Assignment2.Models
 {
-    public class TrackBaseViewModel
-    {
-        public TrackBaseViewModel()
-        {
-
-        }
+    public class TrackBaseViewModel 
+    { 
+    
         [Key]
         [Display(Name = "Track ID")]
         public int TrackId { get; set; }
@@ -37,13 +34,6 @@ namespace Assignment2.Models
 
         public Album Album { get; set; }
 
-        public Genre Genre { get; set; }
-        [Display(Name = "Invoice Line Items")]
-        
-        public ICollection<InvoiceLine> InvoiceLines { get; set; }
-        [Display(Name = "Media Type")]
-        public MediaType MediaType { get; set; }
 
-        public ICollection<Playlist> Playlists { get; set; }
     }
 }

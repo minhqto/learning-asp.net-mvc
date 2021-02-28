@@ -45,7 +45,5 @@ namespace Assignment2.Models
         [Display(Name = "Customer")]
         public Customer Customer { get; set; }
 
-        [Display(Name = "Invoice Lines")]
-        public ICollection<InvoiceLine> InvoiceLines { get; set; }
     }
 }

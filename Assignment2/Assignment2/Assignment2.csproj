@@ -186,6 +186,9 @@
     </Compile>
     <Compile Include="Models\InvoiceAddViewModel.cs" />
     <Compile Include="Models\InvoiceBaseViewModel.cs" />
+    <Compile Include="Models\InvoiceLineBaseViewModel.cs" />
+    <Compile Include="Models\InvoiceLineWithDetailViewModel.cs" />
+    <Compile Include="Models\InvoiceWithDetailViewModel.cs" />
     <Compile Include="Models\TrackBaseViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -236,6 +239,8 @@
     <Content Include="Views\Tracks\Edit.cshtml" />
     <Content Include="Views\Tracks\Index.cshtml" />
     <Content Include="Views\Track\Index.cshtml" />
+    <Content Include="Views\Invoice\Index.cshtml" />
+    <Content Include="Views\Invoice\Details.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -250,9 +255,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Invoice\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

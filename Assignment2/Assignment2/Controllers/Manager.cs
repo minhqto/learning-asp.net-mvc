@@ -6,7 +6,9 @@
 using Assignment2.EntityModels;
 using AutoMapper;
 using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc.Html;
@@ -35,6 +37,9 @@ namespace Assignment2.Controllers
                 // cfg.CreateMap<Employee, EmployeeBase>();
                 cfg.CreateMap<Track, TrackBaseViewModel>();
                 cfg.CreateMap<Invoice, InvoiceBaseViewModel>();
+                cfg.CreateMap<Invoice, InvoiceWithDetailViewModel>();
+                cfg.CreateMap<InvoiceLine, InvoiceLineBaseViewModel>();
+                cfg.CreateMap<InvoiceLine, InvoiceLineWithDetailViewModel>();
 
             });
 
@@ -88,8 +93,7 @@ namespace Assignment2.Controllers
 
         public IEnumerable<InvoiceBaseViewModel> InvoiceGetAll()
         {
-            var invoices = from i in ds.Invoices
-                                            select i;
+            var invoices = ds.Invoices;
 
             return mapper.Map<IEnumerable<Invoice>, IEnumerable<InvoiceBaseViewModel>>(invoices);
         }
@@ -100,6 +104,16 @@ namespace Assignment2.Controllers
            
             return invoice == null ? null : mapper.Map<Invoice, InvoiceBaseViewModel>(invoice);
             
+        }
+
+        public InvoiceWithDetailViewModel InvoiceGetByIdWithDetail(int id)
+        {
+            var detailedInv = ds.Invoices.Include("Customer.Employee")
+                .Include("Customer.Invoices.InvoiceLines.Track.Album.Artist")
+                .Include("Customer.Invoices.InvoiceLines.Track.MediaType")
+                .SingleOrDefault(inv => inv.InvoiceId == id);
+
+            return detailedInv == null ? null : mapper.Map<Invoice, InvoiceWithDetailViewModel>(detailedInv);
         }
     }
 }
