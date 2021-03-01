@@ -1,11 +1,12 @@
-﻿@model Assignment2.Models.InvoiceWithDetailViewModel
+﻿@using System.Globalization
+@model Assignment2.Models.InvoiceWithDetailViewModel
   
 @{
     ViewBag.Title = "Invoice Details";
 
     var invoiceDate = Model.InvoiceDate.ToLongDateString();
     var customerName = Model.CustomerFirstName + " " + Model.CustomerLastName + "<br />" + Model.CustomerCity + ", " + Model.CustomerState;
-
+    var total = Model.Total.ToString("C", CultureInfo.CurrentCulture);
     var salesRep = Model.CustomerEmployeeFirstName + " " + Model.CustomerEmployeeLastName;
     var billingAddress = Model.BillingAddress + "<br />" + Model.BillingCity + ", " + Model.CustomerState + ", " + Model.BillingCountry + "<br />" + Model.BillingPostalCode;
 }
@@ -35,7 +36,7 @@
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Total)
+                @total
             </dd>
         </dl>
         <dl class="dl-horizontal">
