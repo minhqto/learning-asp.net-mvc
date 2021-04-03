@@ -1,0 +1,92 @@
+﻿@model Assignment5.Models.AlbumAddFormViewModel
+
+@{
+    ViewBag.Title = "AddAlbum";
+}
+
+<h2>Add Album for artist @Model.CurrentArtist</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>Complete the form, and click the Create button</h4>
+    <hr />
+    @Html.HiddenFor(model => model.ArtistId)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ReleaseDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ReleaseDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ReleaseDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.UrlAlbum, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.UrlAlbum, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.UrlAlbum, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Genres, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("Genre", Model.Genres, htmlAttributes: new
+       {
+           @class = "form-control",
+           size = "1"
+       })
+            <!-- Can convert this to a single-select listbox by adding a "size" HTML attribute: -->
+            @Html.ValidationMessageFor(model => model.Genres, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-6">
+                <p>All artists</p>
+                @foreach (var artist in Model.AvailableArtists)
+                {
+                    <input type="checkbox" name="ArtistsIds" value="@artist.Value" checked="@artist.Selected" />
+                    @artist.Text
+                    <br />
+                }
+            </div>
+            <div class="col-md-6 well">
+                <p>All tracks</p>
+                @foreach (var track in Model.Tracks)
+                {
+                    <input type="checkbox" name="TrackIds" value="@track.Value" />
+                    @track.Text
+                    <br />
+                }
+            </div>
+        </div>
+    </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
