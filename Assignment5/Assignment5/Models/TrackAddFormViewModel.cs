@@ -11,14 +11,17 @@ namespace Assignment5.Models
     public class TrackAddFormViewModel
     {
         [Key]
+        [Required]
         public int TrackId { get; set; }
-
         public string Clerk { get; set; }
+        [Required]
         [Display(Name="Composer names (comma-separated)")]
         public string Composers { get; set; }
+        [Required]
         [Display(Name="Track genre")]
         public string Genre { get; set; }
         public SelectList GenreList { get; set; }
+        [Required]
         [Display(Name="Track Name")]
         public string Name { get; set; }
         [HiddenInput]

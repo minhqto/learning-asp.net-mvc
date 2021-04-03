@@ -143,7 +143,7 @@ namespace Assignment5.Controllers
         {
             var artists = new List<Artist>();
             var tracks = new List<Track>();
-            var artistToFind = ds.Albums.Find(album.ArtistId);
+            var artistToFind = ds.Artists.Find(album.ArtistId);
 
             if(artistToFind == null)
             {
@@ -384,6 +384,18 @@ namespace Assignment5.Controllers
             try
             {
                 foreach (var e in ds.RoleClaims)
+                {
+                    ds.Entry(e).State = System.Data.Entity.EntityState.Deleted;
+                }
+                foreach (var e in ds.Artists)
+                {
+                    ds.Entry(e).State = System.Data.Entity.EntityState.Deleted;
+                }
+                foreach (var e in ds.Albums)
+                {
+                    ds.Entry(e).State = System.Data.Entity.EntityState.Deleted;
+                }
+                foreach (var e in ds.Tracks)
                 {
                     ds.Entry(e).State = System.Data.Entity.EntityState.Deleted;
                 }

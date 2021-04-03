@@ -38,7 +38,7 @@ namespace Assignment5.Controllers
 
         // GET: Album/{id}/addtrack
         [Authorize(Roles = "Clerk")]
-        [Route("{id}/addtrack")]
+        [Route("album/{id}/addtrack")]
         public ActionResult AddTrack(int? id)
         {
             var form = new TrackAddFormViewModel();
@@ -53,7 +53,7 @@ namespace Assignment5.Controllers
         [Authorize(Roles = "Clerk")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("{id}/addtrack")]
+        [Route("album/{id}/addtrack")]
         public ActionResult AddTrack(TrackAddViewModel newTrack)
         {
             if (!ModelState.IsValid)

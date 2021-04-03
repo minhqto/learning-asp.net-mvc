@@ -74,7 +74,7 @@ namespace Assignment5.Controllers
 
         }
         [Authorize(Roles = "Coordinator")]
-        [Route("{id}/addalbum")]
+        [Route("artist/{id}/addalbum")]
         public ActionResult AddAlbum(int? id)
         {
             var artist = m.ArtistGetById(id.GetValueOrDefault());
@@ -100,7 +100,7 @@ namespace Assignment5.Controllers
         }
         [Authorize(Roles = "Coordinator")]
         [HttpPost]
-        [Route("{id}/addalbum")]
+        [Route("artist/{id}/addalbum")]
         [ValidateAntiForgeryToken]
         public ActionResult AddAlbum(AlbumAddViewModel newAlbum)
         {

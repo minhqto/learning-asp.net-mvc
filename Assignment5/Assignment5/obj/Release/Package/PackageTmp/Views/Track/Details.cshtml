@@ -1,0 +1,65 @@
+﻿@model Assignment5.Models.TrackWithDetailViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details for track @Model.Name</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Composers)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Composers)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Genre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Genre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Clerk)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Clerk)
+        </dd>
+        <dt>
+            Number of albums on this track
+        </dt>
+
+        <dd>
+            @Model.AlbumNames.Count()
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AlbumNames)
+        </dt>
+
+        <dd>
+            @foreach(string album in Model.AlbumNames)
+            {
+                @album<br />
+            }
+        </dd>
+
+
+
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
